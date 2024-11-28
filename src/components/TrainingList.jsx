@@ -1,9 +1,10 @@
 import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
+import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 import { useState, useEffect } from "react";
 import { AgGridReact } from "ag-grid-react";
-import { fetchTrainings } from "../trainnerAPI";
+import { fetchTrainings, deleteTraining } from "../trainnerAPI";
 
 export default function TrainingList() {
   const [trainings, setTrainings] = useState([]);
@@ -14,6 +15,16 @@ export default function TrainingList() {
     { field: "date", filter: true, 
       valueFormatter: (params) =>
         dayjs(params.value).format("DD/MM/YYYY HH:mm"),
+    },
+    {
+      cellRenderer: (params) => (
+        <Button
+          color="error"
+          onClick={() => handleDelete(params.data.id)}
+        >
+          Delete
+        </Button>
+      ),
     },
   ]);
   useEffect(() => {
@@ -33,6 +44,16 @@ export default function TrainingList() {
       })
       .catch((err) => console.error(err));
   };
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure? This action cannot be undone")) {
+      deleteTraining(id)
+        .then(() => {
+          handleFetch();
+        })
+        .catch((err) => console.error(err));
+    }
+  }
 
   return (
     <>
