@@ -10,18 +10,19 @@ import IconButton from "@mui/material/IconButton";
 import CustomerEdit from "./CustomerEdit";
 import CustomerAdd from "./CustomerAdd";
 import TrainingAdd from "./TrainingAdd";
+import CustomerExport from "./CustomerExport";
 
 export default function CustomerList() {
   const [deleteStatus, setDeleteStatus] = useState(false);
   const [customers, setCustomers] = useState([]);
   const [colDefs] = useState([
     { field: "firstname" },
-    { field: "lastname"},
-    { field: "streetaddress" , flex: 2,},
+    { field: "lastname" },
+    { field: "streetaddress", flex: 2 },
     { field: "postcode" },
-    { field: "city" , flex: 2},
-    { field: "email", flex: 2, },
-    { field: "phone" , flex: 2},
+    { field: "city", flex: 2 },
+    { field: "email", flex: 2 },
+    { field: "phone", flex: 2 },
 
     {
       cellRenderer: (params) => (
@@ -53,10 +54,13 @@ export default function CustomerList() {
     },
   ]);
 
-  const defaultColDef = useMemo( ()=> ({
-    flex: 1,
-    filter: true
-    }), []);
+  const defaultColDef = useMemo(
+    () => ({
+      flex: 1,
+      filter: true,
+    }),
+    []
+  );
 
   useEffect(() => {
     handleFetch();
@@ -84,6 +88,7 @@ export default function CustomerList() {
       <h2>Customers</h2>
       <div className="ag-theme-material" style={{ height: 600 }}>
         <CustomerAdd handleFetch={handleFetch} />
+        <CustomerExport customers={customers} />
         <AgGridReact
           defaultColDef={defaultColDef}
           rowData={customers}
