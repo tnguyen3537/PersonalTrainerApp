@@ -3,6 +3,7 @@ import CustomerList from "./components/CustomerList";
 import TrainingList from "./components/TrainingList";
 import About from "./components/About";
 import Contacts from "./components/Contacts";
+import Calendar from "./components/Calendar";
 import { styled } from "@mui/material/styles";
 import { Route, Routes } from "react-router-dom";
 import Container from "@mui/material/Container";
@@ -57,11 +58,12 @@ function App() {
         <Main open={open}>
           <div style={{ marginTop: 60, marginLeft: -25}}>
             <Routes>
-              <Route path="/" element={<About open={open} />} />
-              <Route path="/about" element={<About open={open}/>} />
-              <Route path="/customers" element={<CustomerList open={open}/>} />
-              <Route path="/trainings" element={<TrainingList open={open}/>} />
-              <Route path="/contacts" element={<Contacts open={open}/>} />
+              <Route path="/" element={<About />} />
+              <Route path="/about" element={<About/>} />
+              <Route path="/customers" element={<CustomerList />} />
+              <Route path="/trainings" element={<TrainingList />} />
+              <Route path="/calendar" element={<Calendar/>} />
+              <Route path="/contacts" element={<Contacts />} />
             </Routes>
           </div>
         </Main>

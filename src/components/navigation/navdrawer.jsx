@@ -66,6 +66,10 @@ export default function NavDrawer({open, handleDrawerOpen, handleDrawerClose,}) 
       icon: <MailIcon />,
     },
     {
+      text: "Calendar",
+      icon: <MailIcon />,
+    },
+    {
       text: "Contacts",
       icon: <MailIcon />,
     },
