@@ -10,10 +10,11 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 import NavDrawer from "./components/navigation/navdrawer";
+import TrainingReport from "./components/TrainingReport";
 
 const drawerWidth = 240;
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
+const Main = styled("main", { shouldForwardProp: (prop) => prop !== "drawer" })(
   ({ theme }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -24,7 +25,7 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
     marginLeft: `-${drawerWidth}px`,
     variants: [
       {
-        props: ({ open }) => open,
+        props: ({ drawer }) => drawer,
         style: {
           transition: theme.transitions.create("margin", {
             easing: theme.transitions.easing.easeOut,
@@ -38,24 +39,24 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })(
 );
 
 function App() {
-  const [open, setOpen] = React.useState(false);
+  const [drawerOpen, setDrawerOpen] = React.useState(true);
   const handleDrawerOpen = () => {
-    setOpen(true);
+    setDrawerOpen(true);
   };
 
   const handleDrawerClose = () => {
-    setOpen(false);
+    setDrawerOpen(false);
   };
 
   return (
     <Box sx={{ display: "flex" }}>
       <NavDrawer
-        open={open}
+        drawer={drawerOpen}
         handleDrawerOpen={handleDrawerOpen}
         handleDrawerClose={handleDrawerClose}
       />
       <Container maxWidth="xl">
-        <Main open={open}>
+        <Main drawer={drawerOpen}>
           <div style={{ marginTop: 60, marginLeft: -25}}>
             <Routes>
               <Route path="/" element={<About />} />
@@ -63,6 +64,7 @@ function App() {
               <Route path="/customers" element={<CustomerList />} />
               <Route path="/trainings" element={<TrainingList />} />
               <Route path="/calendar" element={<Calendar/>} />
+              <Route path="/analytics" element={<TrainingReport />} />
               <Route path="/contacts" element={<Contacts />} />
             </Routes>
           </div>

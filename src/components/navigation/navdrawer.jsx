@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { styled, useTheme } from "@mui/material/styles";
 import Drawer from "@mui/material/Drawer";
 import MuiAppBar from "@mui/material/AppBar";
@@ -9,12 +10,15 @@ import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import InboxIcon from "@mui/icons-material/MoveToInbox";
-import MailIcon from "@mui/icons-material/Mail";
+import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import InfoIcon from '@mui/icons-material/Info';
+import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import InsertChartIcon from '@mui/icons-material/InsertChart';
+import ContactMailIcon from '@mui/icons-material/ContactMail';
 import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -49,35 +53,42 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-end",
 }));
 
-// eslint-disable-next-line react/prop-types
-export default function NavDrawer({open, handleDrawerOpen, handleDrawerClose,}) {
+export default function NavDrawer({
+  drawer,
+  handleDrawerOpen,
+  handleDrawerClose,
+}) {
   const theme = useTheme();
   const itemsList = [
     {
       text: "About",
-      icon: <InboxIcon />,
+      icon: <InfoIcon />,
     },
     {
       text: "Customers",
-      icon: <MailIcon />,
+      icon: <PeopleAltIcon />,
     },
     {
       text: "Trainings",
-      icon: <MailIcon />,
+      icon: <FitnessCenterIcon />,
     },
     {
       text: "Calendar",
-      icon: <MailIcon />,
+      icon: <CalendarMonthIcon/>,
+    },
+    {
+      text: "Analytics",
+      icon: <InsertChartIcon />,
     },
     {
       text: "Contacts",
-      icon: <MailIcon />,
+      icon: <ContactMailIcon />,
     },
   ];
 
   return (
     <>
-      <AppBar position="fixed" open={open}>
+      <AppBar position="fixed" open={drawer}>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -88,12 +99,12 @@ export default function NavDrawer({open, handleDrawerOpen, handleDrawerClose,}) 
               {
                 mr: 2,
               },
-              open && { display: "none" },
+              drawer && { display: "none" },
             ]}
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
+          <Typography variant="h5" noWrap component="div">
             Personal Trainer App
           </Typography>
         </Toolbar>
@@ -109,7 +120,7 @@ export default function NavDrawer({open, handleDrawerOpen, handleDrawerClose,}) 
         }}
         variant="persistent"
         anchor="left"
-        open={open}
+        open={drawer}
       >
         <DrawerHeader>
           <IconButton onClick={handleDrawerClose}>
@@ -125,17 +136,18 @@ export default function NavDrawer({open, handleDrawerOpen, handleDrawerClose,}) 
           {itemsList.map((item) => {
             const { text, icon } = item;
             return (
-              <ListItem key={text}>
+              // <ListItem key={text} style={{ padding: '0px' }} >
+              <Link
+                key={text}
+                to={`/${text.toLowerCase()}`}
+                style={{ textDecoration: "none", color: "black" }}
+              >
                 <ListItemButton>
                   {icon && <ListItemIcon>{icon}</ListItemIcon>}
-                  <Link
-                    to={`/${text.toLowerCase()}`}
-                    style={{ textDecoration: "none" }}
-                  >
-                    <ListItemText primary={text} />
-                  </Link>
+                  <ListItemText primary={text} />
                 </ListItemButton>
-              </ListItem>
+              </Link>
+              // </ListItem>
             );
           })}
         </List>
